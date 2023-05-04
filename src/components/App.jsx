@@ -8,32 +8,12 @@ class App extends Component {
     bad: 0,
   };
 
-  onLeaveFeedback = e => {
-    switch (e.target.textContent) {
-      case 'Good':
-        this.setState(prevState => {
-          return {
-            good: prevState.good + 1,
-          };
-        });
-        break;
-      case 'Neutral':
-        this.setState(prevState => {
-          return {
-            neutral: prevState.neutral + 1,
-          };
-        });
-        break;
-      case 'Bad':
-        this.setState(prevState => {
-          return {
-            bad: prevState.bad + 1,
-          };
-        });
-        break;
-      default:
-        return this.state;
-    }
+  onLeaveFeedback = option => {
+    this.setState(prevState => {
+      return {
+        [option]: prevState[option] + 1,
+      };
+    });
   };
 
   countTotalFeedback = () => {
@@ -57,7 +37,10 @@ class App extends Component {
     return (
       <>
         <Section title="Please leave feedback">
-          <FeedbackOptions onLeaveFeedback={onLeaveFeedback} />
+          <FeedbackOptions
+            options={['good', 'neutral', 'bad']}
+            onLeaveFeedback={onLeaveFeedback}
+          />
         </Section>
         <Section title="Statistics">
           {countTotalFeedback() ? (
